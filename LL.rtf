@@ -1,0 +1,476 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\lang1033\f0\fs22 /******************************************************************************\par
+C program for the all operations in the Singly Linked List\par
+\par
+*******************************************************************************/\par
+#include <stdio.h>\par
+#include <stdlib.h>\par
+\par
+// Linked List Node\par
+struct node \{\par
+\tab int info;\par
+\tab struct node* link;\par
+\};\par
+struct node* start = NULL;\par
+\par
+// Function to create list with n nodes initially\par
+void createList()\par
+\{\par
+\tab if (start == NULL) \{\par
+\tab\tab int n;\par
+\tab\tab printf("\\nEnter the number of nodes: ");\par
+\tab\tab scanf("%d", &n);\par
+\tab\tab if (n != 0) \{\par
+\tab\tab\tab int data;\par
+\tab\tab\tab struct node* newnode;\par
+\tab\tab\tab struct node* temp;\par
+\tab\tab\tab newnode = malloc(sizeof(struct node));\par
+\tab\tab\tab start = newnode;\par
+\tab\tab\tab temp = start;\par
+\tab\tab\tab printf("\\nEnter number to"\par
+\tab\tab\tab\tab " be inserted : ");\par
+\tab\tab\tab scanf("%d", &data);\par
+\tab\tab\tab start->info = data;\par
+\par
+\tab\tab\tab for (int i = 2; i <= n; i++) \{\par
+\tab\tab\tab\tab newnode = malloc(sizeof(struct node));\par
+\tab\tab\tab\tab temp->link = newnode;\par
+\tab\tab\tab\tab printf("\\nEnter number to"\par
+\tab\tab\tab\tab\tab " be inserted : ");\par
+\tab\tab\tab\tab scanf("%d", &data);\par
+\tab\tab\tab\tab newnode->info = data;\par
+\tab\tab\tab\tab temp = temp->link;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\tab printf("\\nThe list is created\\n");\par
+\tab\}\par
+\tab else\par
+\tab\tab printf("\\nThe list is already created\\n");\par
+\}\par
+\par
+// Function to traverse the linked list\par
+void traverse()\par
+\{\par
+\tab struct node* temp;\par
+\par
+\tab // List is empty\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is empty\\n");\par
+\par
+\tab // Else print the LL\par
+\tab else \{\par
+\tab\tab temp = start;\par
+\tab\tab while (temp != NULL) \{\par
+\tab\tab\tab printf("Data = %d\\n", temp->info);\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+// Function to insert at the front\par
+// of the linked list\par
+void insertAtFront()\par
+\{\par
+\tab int data;\par
+\tab struct node* temp;\par
+\tab temp = malloc(sizeof(struct node));\par
+\tab printf("\\nEnter number to"\par
+\tab\tab " be inserted : ");\par
+\tab scanf("%d", &data);\par
+\tab temp->info = data;\par
+\par
+\tab // Pointer of temp will be\par
+\tab // assigned to start\par
+\tab temp->link = start;\par
+\tab start = temp;\par
+\}\par
+\par
+// Function to insert at the end of\par
+// the linked list\par
+void insertAtEnd()\par
+\{\par
+\tab int data;\par
+\tab struct node *temp, *head;\par
+\tab temp = malloc(sizeof(struct node));\par
+\par
+\tab // Enter the number\par
+\tab printf("\\nEnter number to"\par
+\tab\tab " be inserted : ");\par
+\tab scanf("%d", &data);\par
+\par
+\tab // Changes links\par
+\tab temp->link = 0;\par
+\tab temp->info = data;\par
+\tab head = start;\par
+\tab while (head->link != NULL) \{\par
+\tab\tab head = head->link;\par
+\tab\}\par
+\tab head->link = temp;\par
+\}\par
+\par
+// Function to insert at any specified\par
+// position in the linked list\par
+void insertAtPosition()\par
+\{\par
+\tab struct node *temp, *newnode;\par
+\tab int pos, data, i = 1;\par
+\tab newnode = malloc(sizeof(struct node));\par
+\par
+\tab // Enter the position and data\par
+\tab printf("\\nEnter position and data :");\par
+\tab scanf("%d %d", &pos, &data);\par
+\par
+\tab // Change Links\par
+\tab temp = start;\par
+\tab newnode->info = data;\par
+\tab newnode->link = 0;\par
+\tab while (i < pos - 1) \{\par
+\tab\tab temp = temp->link;\par
+\tab\tab i++;\par
+\tab\}\par
+\tab newnode->link = temp->link;\par
+\tab temp->link = newnode;\par
+\}\par
+\par
+// Function to delete from the front\par
+// of the linked list\par
+void deleteFirst()\par
+\{\par
+\tab struct node* temp;\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is empty\\n");\par
+\tab else \{\par
+\tab\tab temp = start;\par
+\tab\tab start = start->link;\par
+\tab\tab free(temp);\par
+\tab\}\par
+\}\par
+\par
+// Function to delete from the end\par
+// of the linked list\par
+void deleteEnd()\par
+\{\par
+\tab struct node *temp, *prevnode;\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is Empty\\n");\par
+\tab else \{\par
+\tab\tab temp = start;\par
+\tab\tab while (temp->link != 0) \{\par
+\tab\tab\tab prevnode = temp;\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\}\par
+\tab\tab free(temp);\par
+\tab\tab prevnode->link = 0;\par
+\tab\}\par
+\}\par
+\par
+// Function to delete from any specified\par
+// position from the linked list\par
+void deletePosition()\par
+\{\par
+\tab struct node *temp, *position;\par
+\tab int i = 1, pos;\par
+\par
+\tab // If LL is empty\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is empty\\n");\par
+\par
+\tab // Otherwise\par
+\tab else \{\par
+\tab\tab printf("\\nEnter index : ");\par
+\par
+\tab\tab // Position to be deleted\par
+\tab\tab scanf("%d", &pos);\par
+\tab\tab position = malloc(sizeof(struct node));\par
+\tab\tab temp = start;\par
+\par
+\tab\tab // Traverse till position\par
+\tab\tab while (i < pos - 1) \{\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\tab i++;\par
+\tab\tab\}\par
+\par
+\tab\tab // Change Links\par
+\tab\tab position = temp->link;\par
+\tab\tab temp->link = position->link;\par
+\par
+\tab\tab // Free memory\par
+\tab\tab free(position);\par
+\tab\}\par
+\}\par
+\par
+// Function to find the maximum element\par
+// in the linked list\par
+void maximum()\par
+\{\par
+\tab int a[10];\par
+\tab int i;\par
+\tab struct node* temp;\par
+\par
+\tab // If LL is empty\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is empty\\n");\par
+\par
+\tab // Otherwise\par
+\tab else \{\par
+\tab\tab temp = start;\par
+\tab\tab int max = temp->info;\par
+\par
+\tab\tab // Traverse LL and update the\par
+\tab\tab // maximum element\par
+\tab\tab while (temp != NULL) \{\par
+\par
+\tab\tab\tab // Update the maximum\par
+\tab\tab\tab // element\par
+\tab\tab\tab if (max < temp->info)\par
+\tab\tab\tab\tab max = temp->info;\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\}\par
+\tab\tab printf("\\nMaximum number "\par
+\tab\tab\tab "is : %d ",\par
+\tab\tab\tab max);\par
+\tab\}\par
+\}\par
+\par
+// Function to find the mean of the\par
+// elements in the linked list\par
+void mean()\par
+\{\par
+\tab int a[10];\par
+\tab int i;\par
+\tab struct node* temp;\par
+\par
+\tab // If LL is empty\par
+\tab if (start == NULL)\par
+\tab\tab printf("\\nList is empty\\n");\par
+\par
+\tab // Otherwise\par
+\tab else \{\par
+\tab\tab temp = start;\par
+\par
+\tab\tab // Stores the sum and count of\par
+\tab\tab // element in the LL\par
+\tab\tab int sum = 0, count = 0;\par
+\tab\tab float m;\par
+\par
+\tab\tab // Traverse the LL\par
+\tab\tab while (temp != NULL) \{\par
+\par
+\tab\tab\tab // Update the sum\par
+\tab\tab\tab sum = sum + temp->info;\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\tab count++;\par
+\tab\tab\}\par
+\par
+\tab\tab // Find the mean\par
+\tab\tab m = sum / count;\par
+\par
+\tab\tab // Print the mean value\par
+\tab\tab printf("\\nMean is %f ", m);\par
+\tab\}\par
+\}\par
+\par
+// Function to sort the linked list\par
+// in ascending order\par
+void sort()\par
+\{\par
+\tab struct node* current = start;\par
+\tab struct node* index = NULL;\par
+\tab int temp;\par
+\par
+\tab // If LL is empty\par
+\tab if (start == NULL) \{\par
+\tab\tab return;\par
+\tab\}\par
+\par
+\tab // Else\par
+\tab else \{\par
+\par
+\tab\tab // Traverse the LL\par
+\tab\tab while (current != NULL) \{\par
+\tab\tab\tab index = current->link;\par
+\par
+\tab\tab\tab // Traverse the LL nestedly\par
+\tab\tab\tab // and find the minimum\par
+\tab\tab\tab // element\par
+\tab\tab\tab while (index != NULL) \{\par
+\par
+\tab\tab\tab\tab // Swap with it the value\par
+\tab\tab\tab\tab // at current\par
+\tab\tab\tab\tab if (current->info > index->info) \{\par
+\tab\tab\tab\tab\tab temp = current->info;\par
+\tab\tab\tab\tab\tab current->info = index->info;\par
+\tab\tab\tab\tab\tab index->info = temp;\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\tab index = index->link;\par
+\tab\tab\tab\}\par
+\par
+\tab\tab\tab // Update the current\par
+\tab\tab\tab current = current->link;\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+// Function to reverse the linked list\par
+void reverseLL()\par
+\{\par
+\tab struct node *t1, *t2, *temp;\par
+\tab t1 = t2 = NULL;\par
+\par
+\tab // If LL is empty\par
+\tab if (start == NULL)\par
+\tab\tab printf("List is empty\\n");\par
+\par
+\tab // Else\par
+\tab else \{\par
+\par
+\tab\tab // Traverse the LL\par
+\tab\tab while (start != NULL) \{\par
+\par
+\tab\tab\tab // reversing of points\par
+\tab\tab\tab t2 = start->link;\par
+\tab\tab\tab start->link = t1;\par
+\tab\tab\tab t1 = start;\par
+\tab\tab\tab start = t2;\par
+\tab\tab\}\par
+\tab\tab start = t1;\par
+\par
+\tab\tab // New head Node\par
+\tab\tab temp = start;\par
+\par
+\tab\tab printf("Reversed linked "\par
+\tab\tab\tab "list is : ");\par
+\par
+\tab\tab // Print the LL\par
+\tab\tab while (temp != NULL) \{\par
+\tab\tab\tab printf("%d ", temp->info);\par
+\tab\tab\tab temp = temp->link;\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+// Function to search an element in linked list\par
+void search()\par
+\{\par
+\tab int found = -1;\par
+\tab // creating node to traverse\par
+\tab struct node* tr = start;\par
+\par
+\tab // first checking if the list is empty or not\par
+\tab if (start == NULL) \{\par
+\tab\tab printf("Linked list is empty\\n");\par
+\tab\}\par
+\tab else \{\par
+\tab\tab printf("\\nEnter the element you want to search: ");\par
+\tab\tab int key;\par
+\tab\tab scanf("%d", &key);\par
+\par
+\tab\tab // checking by traversing\par
+\tab\tab while (tr != NULL) \{\par
+\tab\tab\tab // checking for key\par
+\tab\tab\tab if (tr->info == key) \{\par
+\tab\tab\tab\tab found = 1;\par
+\tab\tab\tab\tab break;\par
+\tab\tab\tab\}\par
+\tab\tab\tab // moving forward if not at this position\par
+\tab\tab\tab else \{\par
+\tab\tab\tab\tab tr = tr->link;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\par
+\tab\tab // printing found or not\par
+\tab\tab if (found == 1) \{\par
+\tab\tab\tab printf(\par
+\tab\tab\tab\tab "Yes, %d is present in the linked list.\\n",\par
+\tab\tab\tab\tab key);\par
+\tab\tab\}\par
+\tab\tab else \{\par
+\tab\tab\tab printf("No, %d is not present in the linked "\par
+\tab\tab\tab\tab "list.\\n",\par
+\tab\tab\tab\tab key);\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+// Driver Code\par
+int main()\par
+\{\par
+\tab createList();\par
+\tab int choice;\par
+\tab while (1) \{\par
+\par
+\tab\tab printf("\\n\\t1 To see list\\n");\par
+\tab\tab printf("\\t2 For insertion at"\par
+\tab\tab\tab " starting\\n");\par
+\tab\tab printf("\\t3 For insertion at"\par
+\tab\tab\tab " end\\n");\par
+\tab\tab printf("\\t4 For insertion at "\par
+\tab\tab\tab "any position\\n");\par
+\tab\tab printf("\\t5 For deletion of "\par
+\tab\tab\tab "first element\\n");\par
+\tab\tab printf("\\t6 For deletion of "\par
+\tab\tab\tab "last element\\n");\par
+\tab\tab printf("\\t7 For deletion of "\par
+\tab\tab\tab "element at any position\\n");\par
+\tab\tab printf("\\t8 To find maximum among"\par
+\tab\tab\tab " the elements\\n");\par
+\tab\tab printf("\\t9 To find mean of "\par
+\tab\tab\tab "the elements\\n");\par
+\tab\tab printf("\\t10 To sort element\\n");\par
+\tab\tab printf("\\t11 To reverse the "\par
+\tab\tab\tab "linked list\\n");\par
+\tab\tab printf("\\t12 Search an element in linked list\\n");\par
+\tab\tab printf("\\t13 To exit\\n");\par
+\tab\tab printf("\\nEnter Choice :\\n");\par
+\tab\tab scanf("%d", &choice);\par
+\par
+\tab\tab switch (choice) \{\par
+\tab\tab case 1:\par
+\tab\tab\tab traverse();\par
+\tab\tab\tab break;\par
+\tab\tab case 2:\par
+\tab\tab\tab insertAtFront();\par
+\tab\tab\tab break;\par
+\tab\tab case 3:\par
+\tab\tab\tab insertAtEnd();\par
+\tab\tab\tab break;\par
+\tab\tab case 4:\par
+\tab\tab\tab insertAtPosition();\par
+\tab\tab\tab break;\par
+\tab\tab case 5:\par
+\tab\tab\tab deleteFirst();\par
+\tab\tab\tab break;\par
+\tab\tab case 6:\par
+\tab\tab\tab deleteEnd();\par
+\tab\tab\tab break;\par
+\tab\tab case 7:\par
+\tab\tab\tab deletePosition();\par
+\tab\tab\tab break;\par
+\tab\tab case 8:\par
+\tab\tab\tab maximum();\par
+\tab\tab\tab break;\par
+\tab\tab case 9:\par
+\tab\tab\tab mean();\par
+\tab\tab\tab break;\par
+\tab\tab case 10:\par
+\tab\tab\tab sort();\par
+\tab\tab\tab break;\par
+\tab\tab case 11:\par
+\tab\tab\tab reverseLL();\par
+\tab\tab\tab break;\par
+\tab\tab case 12:\par
+\tab\tab\tab search();\par
+\tab\tab\tab break;\par
+\tab\tab case 13:\par
+\tab\tab\tab exit(1);\par
+\tab\tab\tab break;\par
+\tab\tab default:\par
+\tab\tab\tab printf("Incorrect Choice\\n");\par
+\tab\tab\}\par
+\tab\}\par
+\tab return 0;\par
+\}\par
+\par
+\par
+}
+ 
